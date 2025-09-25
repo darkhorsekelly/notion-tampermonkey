@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.0
-// @description  Reduces H1 size, hides controls, opens details pane, optimizes property panel
+// @version      2.0.1
+// @description  Reduces H1 size, hides controls, opens details pane, adds section colors
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
+// @updateURL    https://raw.githubusercontent.com/darkhorsekelly/notion-tampermonkey/main/notion-auto-enhance.js
+// @downloadURL  https://raw.githubusercontent.com/darkhorsekelly/notion-tampermonkey/main/notion-auto-enhance.js
 // @grant        GM_addStyle
 // @run-at       document-idle
 // ==/UserScript==
@@ -139,6 +141,29 @@
             display: flex !important;
             align-items: center !important;
         }
+
+        /* Property section background colors */
+        #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(1) {
+            background-color: #f5f0e8 !important;
+        }
+        #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(2) {
+            background-color: #fff9e6 !important;
+        }
+        #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(3) {
+            background-color: #fff2e6 !important;
+        }
+        #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(4) {
+            background-color: #e6f3ff !important;
+        }
+        #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(5) {
+            background-color: #f0e6ff !important;
+        }
+        #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(6) {
+            background-color: #f5f5f5 !important;
+        }
+        #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(7) {
+            background-color: #e8e8e8 !important;
+        }
     `);
 
     function isDetailsPaneOpen() {
@@ -218,6 +243,6 @@
         subtree: true
     });
 
-    console.log('[Notion] Script loaded - H1 reduced, controls hidden, details auto-open, toggles auto-expand, property panel optimized');
+    console.log('[Notion] Script loaded - H1 reduced, controls hidden, details auto-open, toggles auto-expand, property panel optimized with section colors');
 
 })();
