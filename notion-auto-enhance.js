@@ -27,7 +27,7 @@
         .notion-page-content h1,
         [data-content-editable-root="true"] h1 {
             font-size: 14px !important;
-            line-height: 1.1 !important;
+            line-height: 1 !important;
             margin-top: 2px !important;
             margin-bottom: 2px !important;
             padding-top: 2px !important;
@@ -61,18 +61,38 @@
             margin: 0 !important;
         }
 
+        /* Remove margin-bottom from all children of page properties table */
+        div[role="table"][aria-label="Page properties"] > * {
+            margin-bottom: 0 !important;
+        }
+
+        /* More specific targeting for div children with margin-bottom */
+        div[role="table"][aria-label="Page properties"] > div[style*="margin-bottom"] {
+            margin-bottom: 0 !important;
+        }
+
+        /* Target by the specific structure - div containers with cursor: grab */
+        div[role="table"][aria-label="Page properties"] > div[style*="cursor: grab"] {
+            margin-bottom: 0 !important;
+        }
+
+        /* Remove padding-top from parents of page properties tables */
+        div[style*="padding-top: 8px"]:has(> div[role="table"][aria-label="Page properties"]) {
+            padding-top: 0 !important;
+        }
+
         div[role="row"] {
             margin-bottom: 1px !important;
         }
 
         div[role="row"] > div:first-child > div > div[style*="height: 34px"] {
-            height: 24px !important;
+            height: 14px !important;
             align-items: center !important;
         }
 
         div[role="cell"] > div > div {
-            font-size: 12px !important;
-            line-height: 16px !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
         }
 
         div[role="cell"] {
@@ -80,23 +100,117 @@
             padding-bottom: 1px !important;
         }
 
+        /* Target parent div of role="cell" elements */
+        div[role="row"]:has(> div[role="cell"]) {
+            line-height: 1.2 !important;
+            font-size: 14px !important;
+            padding: 1px 0 !important;
+            /* background-color: rgba(255, 255, 0, 0.1) !important; Very light yellow for debugging */
+        }
+
         div[data-testid="property-value"] {
-            min-height: 24px !important;
-            padding-top: 2px !important;
-            padding-bottom: 2px !important;
-            font-size: 12px !important;
-            line-height: 16px !important;
+            min-height: 14px !important;
+            height: 14px !important;
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
         }
 
         div[data-testid="property-value"] > div {
-            line-height: 16px !important;
+            line-height: 1 !important;
         }
 
-        div[role="button"][aria-expanded="true"],
-        div[role="button"][aria-expanded="false"] {
-            padding-top: 4px !important;
-            padding-bottom: 4px !important;
-            margin-bottom: 4px !important;
+        /* Try multiple approaches to target the 34px height buttons */
+        div[role="button"][tabindex="0"][style*="height: 34px"] {
+            height: 24px !important;
+        }
+
+        div[role="button"][style*="height: 34px"][style*="padding-inline: 6px"] {
+            height: 24px !important;
+            padding-inline: 3px !important;
+        }
+
+        div[role="button"][style*="gap: 6px"][style*="height: 34px"] {
+            height: 24px !important;
+            gap: 3px !important;
+        }
+
+        /* Target the specific div with padding-inline: 6px that contains buttons */
+        div[style*="padding-inline: 6px"] div[role="button"] {
+            padding-inline: 0px !important;
+        }
+
+        /* Target the specific container with padding-inline: 6px within notion-page-block */
+        .notion-page-block div[style*="padding-inline: 6px"] {
+            padding-inline: 0px !important;
+        }
+
+        /* Only target expand/collapse buttons within property cells */
+        div[role="cell"] div[role="button"][aria-expanded="true"],
+        div[role="cell"] div[role="button"][aria-expanded="false"] {
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+            margin-bottom: 0px !important;
+            height: 14px !important;
+            min-height: 14px !important;
+        }
+
+        /* Target all buttons in property cells - scoped properly */
+        div[role="cell"] div[role="button"] {
+            height: 14px !important;
+            min-height: 14px !important;
+            padding: 0px !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+        }
+
+        /* Target nested buttons within property values (like status buttons) - scoped */
+        div[role="cell"] div[data-testid="property-value"] div[role="button"] {
+            height: 14px !important;
+            min-height: 14px !important;
+            padding: 0px !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+        }
+
+        /* Target span elements inside property value buttons - scoped to cells */
+        div[role="cell"] div[data-testid="property-value"] div[role="button"] span {
+            font-size: 14px !important;
+            line-height: 1 !important;
+        }
+
+        /* Target ONLY buttons within property cells - with specific inline styles */
+        div[role="cell"] div[role="button"][style*="height: 24px"] {
+            height: 14px !important;
+            padding: 0px !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+        }
+
+        /* Target ONLY buttons within property cells - with padding-inline: 6px */
+        div[role="cell"] div[role="button"][style*="padding-inline: 6px"] {
+            padding: 0px !important;
+            height: 14px !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+        }
+
+        /* Target ONLY buttons within property cells - with font-size: 14px */
+        div[role="cell"] div[role="button"][style*="font-size: 14px"] {
+            font-size: 14px !important;
+            line-height: 1 !important;
+        }
+
+        /* Ultra-specific: ONLY buttons within property-value containers */
+        div[data-testid="property-value"] div[role="button"][style*="height: 24px"],
+        div[data-testid="property-value"] div[role="button"][style*="padding-inline: 6px"],
+        div[data-testid="property-value"] div[role="button"][style*="font-size: 14px"] {
+            height: 14px !important;
+            padding: 0px !important;
+            font-size: 14px !important;
+            line-height: 1 !important;
+            min-height: 14px !important;
         }
 
         div[style*="cursor: grab"] {
@@ -104,18 +218,14 @@
         }
 
         div[role="cell"] svg {
-            width: 12px !important;
-            height: 12px !important;
-        }
-
-        div[role="row"] > div:first-child {
-            padding-right: 2px !important;
+            width: 14px !important;
+            height: 14px !important;
         }
 
         div[data-testid="property-value"] > div > div[style*="rgb(168, 164, 156)"] {
-            min-height: 20px !important;
-            padding-top: 1px !important;
-            padding-bottom: 1px !important;
+            min-height: 14px !important;
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
         }
 
         .notion-selectable:has([data-testid="property-value"]) {
@@ -131,6 +241,8 @@
         div[role="row"] > div:first-child {
             align-items: center !important;
             padding-top: 0 !important;
+            padding-right: 2px !important;
+            height: 14px !important;
         }
 
         div[role="cell"] + div[role="cell"] {
@@ -140,6 +252,9 @@
         div[role="cell"] > div > div > div {
             display: flex !important;
             align-items: center !important;
+            min-height: 14px !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
         }
 
         /* Property section background colors */
@@ -221,9 +336,48 @@
         });
     }
 
+
+    // Function to fix button heights that aren't responding to CSS
+    function fixButtonHeights() {
+        console.log('[Notion] Looking for buttons with height 34px...');
+
+        // Target buttons with height 34px in inline styles
+        const buttons34px = document.querySelectorAll('div[role="button"][style*="height: 34px"]');
+        console.log(`[Notion] Found ${buttons34px.length} buttons with height: 34px`);
+
+        buttons34px.forEach((button, index) => {
+            console.log(`[Notion] Button ${index + 1} before:`, button.style.height);
+
+            // Directly modify the inline style
+            button.style.height = '24px';
+
+            // Also modify padding if it has padding-inline: 6px
+            if (button.style.paddingInline === '6px') {
+                button.style.paddingInline = '3px';
+            }
+
+            // Also modify gap if it has gap: 6px
+            if (button.style.gap === '6px') {
+                button.style.gap = '3px';
+            }
+
+            console.log(`[Notion] Button ${index + 1} after:`, button.style.height);
+        });
+
+        // Target buttons with tabindex="0" and height 34px
+        const tabButtons = document.querySelectorAll('div[role="button"][tabindex="0"][style*="height: 34px"]');
+        console.log(`[Notion] Found ${tabButtons.length} tabbed buttons with height: 34px`);
+
+        tabButtons.forEach((button, index) => {
+            button.style.height = '24px';
+            console.log(`[Notion] Tabbed button ${index + 1} fixed to:`, button.style.height);
+        });
+    }
+
     setTimeout(() => {
         openDetailsPane();
         setTimeout(expandAllToggles, 2000);
+        setTimeout(fixButtonHeights, 2500);
     }, 1500);
 
     let lastUrl = location.href;
@@ -234,6 +388,7 @@
             setTimeout(() => {
                 openDetailsPane();
                 setTimeout(expandAllToggles, 2000);
+                setTimeout(fixButtonHeights, 2500);
             }, 1500);
         }
     });
@@ -242,6 +397,9 @@
         childList: true,
         subtree: true
     });
+
+    // Run button height fix immediately
+    setTimeout(fixButtonHeights, 1000);
 
     console.log('[Notion] Script loaded - H1 reduced, controls hidden, details auto-open, toggles auto-expand, property panel optimized with section colors');
 
