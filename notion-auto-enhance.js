@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.0.2
+// @version      2.0.3
 // @description  Reduces H1 size, hides controls, opens details pane, adds section colors, testing version control
 // @author       You
 // @match        https://www.notion.so/*
