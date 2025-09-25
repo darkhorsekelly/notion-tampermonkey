@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.0.3
-// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height
+// @version      2.0.5
+// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
@@ -15,7 +15,6 @@
 (function() {
     'use strict';
 
-    // Inject CSS to make H1 tiny with minimal vertical space
     GM_addStyle(`
         /* Target all H1 elements and title blocks */
         h1,
