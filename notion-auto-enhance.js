@@ -2,7 +2,7 @@
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
 // @version      2.0.3
-// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, testing version control
+// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
@@ -56,99 +56,139 @@
             display: none !important;
         }
 
-        /* Property panel optimizations */
-        div[role="table"][aria-label="Page properties"] {
+        /* Property panel optimizations - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="table"][aria-label="Page properties"] {
             margin: 0 !important;
         }
 
-        /* Remove margin-bottom from all children of page properties table */
-        div[role="table"][aria-label="Page properties"] > * {
+        /* Remove margin-bottom from all children of page properties table - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="table"][aria-label="Page properties"] > * {
             margin-bottom: 0 !important;
         }
 
-        /* More specific targeting for div children with margin-bottom */
-        div[role="table"][aria-label="Page properties"] > div[style*="margin-bottom"] {
+        /* More specific targeting for div children with margin-bottom - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="table"][aria-label="Page properties"] > div[style*="margin-bottom"] {
             margin-bottom: 0 !important;
         }
 
-        /* Target by the specific structure - div containers with cursor: grab */
-        div[role="table"][aria-label="Page properties"] > div[style*="cursor: grab"] {
+        /* Target by the specific structure - div containers with cursor: grab - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="table"][aria-label="Page properties"] > div[style*="cursor: grab"] {
             margin-bottom: 0 !important;
         }
 
-        /* Remove padding-top from parents of page properties tables */
-        div[style*="padding-top: 8px"]:has(> div[role="table"][aria-label="Page properties"]) {
+        /* Remove padding-top from parents of page properties tables - ONLY in sidebar */
+        aside[aria-label="Info"] div[style*="padding-top: 8px"]:has(> div[role="table"][aria-label="Page properties"]) {
             padding-top: 0 !important;
         }
 
-        div[role="row"] {
+        /* Row and cell styling - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="row"] {
             margin-bottom: 1px !important;
         }
 
-        div[role="row"] > div:first-child > div > div[style*="height: 34px"] {
+        aside[aria-label="Info"] div[role="row"] > div:first-child > div > div[style*="height: 34px"] {
             height: 14px !important;
             align-items: center !important;
         }
 
-        div[role="cell"] > div > div {
+        aside[aria-label="Info"] div[role="cell"] > div > div {
             font-size: 14px !important;
             line-height: 1 !important;
         }
 
-        div[role="cell"] {
+        aside[aria-label="Info"] div[role="cell"] {
             padding-top: 1px !important;
             padding-bottom: 1px !important;
         }
 
-        /* Target parent div of role="cell" elements */
-        div[role="row"]:has(> div[role="cell"]) {
+        /* Target parent div of role="cell" elements - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="row"]:has(> div[role="cell"]) {
             line-height: 1.2 !important;
             font-size: 14px !important;
             padding: 1px 0 !important;
             /* background-color: rgba(255, 255, 0, 0.1) !important; Very light yellow for debugging */
         }
 
-        div[data-testid="property-value"] {
+        /* Grid-based layout reordering - target the layout-content that contains notion-page-content - OUTSIDE sidebar */
+        div.layout > div:has(> div.notion-page-content) {
+            grid-row-start: 4 !important;
+        }
+
+        /* Ensure all other children flow naturally after the repositioned element - OUTSIDE sidebar */
+        div.layout > *:not(:has(> div.notion-page-content)) {
+            grid-row-start: auto !important;
+        }
+
+        /* Target the third child of div.layout with class layout-content - OUTSIDE sidebar */
+        div.layout > :nth-child(3).layout-content {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        /* Property value styling - ONLY in sidebar */
+        aside[aria-label="Info"] div[data-testid="property-value"] {
             min-height: 14px !important;
-            height: 14px !important;
-            padding-top: 0px !important;
-            padding-bottom: 0px !important;
+            height: auto !important; /* Allow height to grow for content-rich buttons */
+            padding-top: 2px !important; /* Add minimal padding for content */
+            padding-bottom: 2px !important;
             font-size: 14px !important;
             line-height: 1 !important;
         }
 
-        div[data-testid="property-value"] > div {
-            line-height: 1 !important;
+        aside[aria-label="Info"] div[data-testid="property-value"] > div {
+            line-height: 1.4 !important; /* Increase line-height for better text visibility */
         }
 
-        /* Try multiple approaches to target the 34px height buttons */
-        div[role="button"][tabindex="0"][style*="height: 34px"] {
+        /* For content-rich property values that contain spans, use more generous spacing */
+        div[data-testid="property-value"]:has(span) {
+            height: auto !important;
+            min-height: 20px !important; /* Allow more height for content */
+            padding-top: 4px !important;
+            padding-bottom: 4px !important;
+        }
+
+        div[data-testid="property-value"] > div:has(span) {
+            line-height: 1.4 !important;
+        }
+
+        /* Try multiple approaches to target the 34px height buttons - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="button"][tabindex="0"][style*="height: 34px"] {
             height: 24px !important;
         }
 
-        div[role="button"][style*="height: 34px"][style*="padding-inline: 6px"] {
+        aside[aria-label="Info"] div[role="button"][style*="height: 34px"][style*="padding-inline: 6px"] {
             height: 24px !important;
             padding-inline: 3px !important;
         }
 
-        div[role="button"][style*="gap: 6px"][style*="height: 34px"] {
+        aside[aria-label="Info"] div[role="button"][style*="gap: 6px"][style*="height: 34px"] {
             height: 24px !important;
             gap: 3px !important;
         }
 
-        /* Target the specific div with padding-inline: 6px that contains buttons */
-        div[style*="padding-inline: 6px"] div[role="button"] {
+        /* Target the specific div with padding-inline: 6px that contains buttons - ONLY in sidebar */
+        aside[aria-label="Info"] div[style*="padding-inline: 6px"] div[role="button"] {
             padding-inline: 0px !important;
         }
 
-        /* Target the specific container with padding-inline: 6px within notion-page-block */
-        .notion-page-block div[style*="padding-inline: 6px"] {
+        /* Target ONLY elements within the UpdateSidebar context */
+        aside[aria-label="Info"] div[style*="padding-inline: 6px"] {
             padding-inline: 0px !important;
         }
 
-        /* Only target expand/collapse buttons within property cells */
-        div[role="cell"] div[role="button"][aria-expanded="true"],
-        div[role="cell"] div[role="button"][aria-expanded="false"] {
+        /* More specific: within the sidebar tabpanel */
+        #UpdateSidebar-tabpanel-2 div[style*="padding-inline: 6px"] {
+            padding-inline: 0px !important;
+        }
+
+        /* Target buttons specifically within sidebar property cells */
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="padding-inline: 6px"] {
+            padding-inline: 0px !important;
+        }
+
+        /* Only target expand/collapse buttons within property cells - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][aria-expanded="true"],
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][aria-expanded="false"] {
             padding-top: 0px !important;
             padding-bottom: 0px !important;
             margin-bottom: 0px !important;
@@ -156,8 +196,8 @@
             min-height: 14px !important;
         }
 
-        /* Target all buttons in property cells - scoped properly */
-        div[role="cell"] div[role="button"] {
+        /* Target all buttons in property cells - scoped properly - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="cell"] div[role="button"] {
             height: 14px !important;
             min-height: 14px !important;
             padding: 0px !important;
@@ -165,8 +205,8 @@
             line-height: 1 !important;
         }
 
-        /* Target nested buttons within property values (like status buttons) - scoped */
-        div[role="cell"] div[data-testid="property-value"] div[role="button"] {
+        /* Target nested buttons within property values (like status buttons) - scoped - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="cell"] div[data-testid="property-value"] div[role="button"] {
             height: 14px !important;
             min-height: 14px !important;
             padding: 0px !important;
@@ -174,38 +214,38 @@
             line-height: 1 !important;
         }
 
-        /* Target span elements inside property value buttons - scoped to cells */
-        div[role="cell"] div[data-testid="property-value"] div[role="button"] span {
+        /* Target span elements inside property value buttons - scoped to cells - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="cell"] div[data-testid="property-value"] div[role="button"] span {
             font-size: 14px !important;
             line-height: 1 !important;
         }
 
-        /* Target ONLY buttons within property cells - with specific inline styles */
-        div[role="cell"] div[role="button"][style*="height: 24px"] {
+        /* Target ONLY buttons within sidebar property cells - with specific inline styles */
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="height: 24px"] {
             height: 14px !important;
             padding: 0px !important;
             font-size: 14px !important;
             line-height: 1 !important;
         }
 
-        /* Target ONLY buttons within property cells - with padding-inline: 6px */
-        div[role="cell"] div[role="button"][style*="padding-inline: 6px"] {
+        /* Target ONLY buttons within sidebar property cells - with padding-inline: 6px */
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="padding-inline: 6px"] {
             padding: 0px !important;
             height: 14px !important;
             font-size: 14px !important;
             line-height: 1 !important;
         }
 
-        /* Target ONLY buttons within property cells - with font-size: 14px */
-        div[role="cell"] div[role="button"][style*="font-size: 14px"] {
+        /* Target ONLY buttons within sidebar property cells - with font-size: 14px */
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="font-size: 14px"] {
             font-size: 14px !important;
             line-height: 1 !important;
         }
 
-        /* Ultra-specific: ONLY buttons within property-value containers */
-        div[data-testid="property-value"] div[role="button"][style*="height: 24px"],
-        div[data-testid="property-value"] div[role="button"][style*="padding-inline: 6px"],
-        div[data-testid="property-value"] div[role="button"][style*="font-size: 14px"] {
+        /* Ultra-specific: ONLY buttons within sidebar property-value containers */
+        aside[aria-label="Info"] div[data-testid="property-value"] div[role="button"][style*="height: 24px"],
+        aside[aria-label="Info"] div[data-testid="property-value"] div[role="button"][style*="padding-inline: 6px"],
+        aside[aria-label="Info"] div[data-testid="property-value"] div[role="button"][style*="font-size: 14px"] {
             height: 14px !important;
             padding: 0px !important;
             font-size: 14px !important;
@@ -213,43 +253,45 @@
             min-height: 14px !important;
         }
 
-        div[style*="cursor: grab"] {
+        /* Sidebar-specific styling - ONLY in sidebar */
+        aside[aria-label="Info"] div[style*="cursor: grab"] {
             margin-bottom: 8px !important;
         }
 
-        div[role="cell"] svg {
+        aside[aria-label="Info"] div[role="cell"] svg {
             width: 14px !important;
             height: 14px !important;
         }
 
-        div[data-testid="property-value"] > div > div[style*="rgb(168, 164, 156)"] {
+        aside[aria-label="Info"] div[data-testid="property-value"] > div > div[style*="rgb(168, 164, 156)"] {
             min-height: 14px !important;
             padding-top: 0px !important;
             padding-bottom: 0px !important;
         }
 
-        .notion-selectable:has([data-testid="property-value"]) {
+        aside[aria-label="Info"] .notion-selectable:has([data-testid="property-value"]) {
             margin-bottom: 0 !important;
             padding: 0 !important;
         }
 
-        div[role="cell"],
-        div[data-testid="property-value"] {
+        aside[aria-label="Info"] div[role="cell"],
+        aside[aria-label="Info"] div[data-testid="property-value"] {
             border-radius: 2px !important;
         }
 
-        div[role="row"] > div:first-child {
+        /* Row and cell styling - ONLY in sidebar */
+        aside[aria-label="Info"] div[role="row"] > div:first-child {
             align-items: center !important;
             padding-top: 0 !important;
             padding-right: 2px !important;
             height: 14px !important;
         }
 
-        div[role="cell"] + div[role="cell"] {
+        aside[aria-label="Info"] div[role="cell"] + div[role="cell"] {
             align-items: center !important;
         }
 
-        div[role="cell"] > div > div > div {
+        aside[aria-label="Info"] div[role="cell"] > div > div > div {
             display: flex !important;
             align-items: center !important;
             min-height: 14px !important;
