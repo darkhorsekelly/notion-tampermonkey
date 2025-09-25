@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.0.5
+// @version      2.1.0
 // @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order
 // @author       You
 // @match        https://www.notion.so/*
@@ -333,6 +333,7 @@
         return false;
     }
 
+    // Function to open the details pane
     function openDetailsPane() {
         if (isDetailsPaneOpen()) {
             console.log('[Notion] Details pane already open');
