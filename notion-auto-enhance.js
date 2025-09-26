@@ -283,6 +283,11 @@
             border-radius: 2px !important;
         }
 
+        /* Remove padding-top from div with both .notion-scroller and .vertical classes - ONLY in sidebar */
+        aside[aria-label="Info"] div.notion-scroller.vertical {
+            padding-top: 0 !important;
+        }
+
         /* Row and cell styling - ONLY in sidebar */
         aside[aria-label="Info"] div[role="row"] > div:first-child {
             align-items: center !important;
