@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.1.1
+// @version      2.1.2
 // @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order
 // @author       You
 // @match        https://www.notion.so/*
@@ -305,7 +305,7 @@
 
         /* Property section background colors */
         #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(1) {
-            background-color: #f5f0e8 !important;
+            background-color: #e8e8e8 !important;
         }
         #UpdateSidebar-tabpanel-2 > div > div > div > div.layout-content > div > div > div > div > div:nth-child(2) {
             background-color: #fff9e6 !important;
