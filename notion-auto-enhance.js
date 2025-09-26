@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.1.0
+// @version      2.1.1
 // @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order
 // @author       You
 // @match        https://www.notion.so/*
@@ -34,9 +34,9 @@
         }
 
         /* Remove padding-bottom: 20px from the container with padding-inline-start: 0px - ONLY in sidebar */
-aside[aria-label="Info"] div[style*="padding-inline-start: 0px"][style*="padding-bottom: 20px"] {
-    padding-bottom: 0 !important;
-}
+            aside[aria-label="Info"] div[style*="padding-inline-start: 0px"][style*="padding-bottom: 20px"] {
+            padding-bottom: 0 !important;
+        }
 
         /* Remove extra spacing around H1 containers */
         .notion-header-block,
