@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.1.4
-// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order
+// @version      2.1.6
+// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
