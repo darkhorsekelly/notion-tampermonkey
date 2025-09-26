@@ -12,7 +12,7 @@
 // @run-at       document-idle
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     GM_addStyle(`
@@ -32,6 +32,11 @@
             padding-top: 2px !important;
             padding-bottom: 2px !important;
         }
+
+        /* Remove padding-bottom: 20px from the container with padding-inline-start: 0px - ONLY in sidebar */
+aside[aria-label="Info"] div[style*="padding-inline-start: 0px"][style*="padding-bottom: 20px"] {
+    padding-bottom: 0 !important;
+}
 
         /* Remove extra spacing around H1 containers */
         .notion-header-block,
