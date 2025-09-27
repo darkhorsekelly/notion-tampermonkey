@@ -33,6 +33,10 @@
             padding-bottom: 2px !important;
         }
 
+        div[role="dialog"] {
+            top: -15px !important;
+        }
+
         aside[aria-label="Info"] div[style*="position: absolute"][style*="inset-inline-end: 6px"] {
             top: -2px !important;
         }
