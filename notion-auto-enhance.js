@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.1.6
-// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls
+// @version      2.1.7
+// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls, Rolodex displays full content
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
@@ -26,7 +26,7 @@
         .notion-page-content h1,
         [data-content-editable-root="true"] h1 {
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
             margin-top: 2px !important;
             margin-bottom: 2px !important;
             padding-top: 2px !important;
@@ -101,7 +101,7 @@
 
         aside[aria-label="Info"] div[role="cell"] > div > div {
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
         }
 
         aside[aria-label="Info"] div[role="cell"] {
@@ -136,15 +136,16 @@
         /* Property value styling - ONLY in sidebar */
         aside[aria-label="Info"] div[data-testid="property-value"] {
             min-height: 14px !important;
+
             height: auto !important; /* Allow height to grow for content-rich buttons */
             padding-top: 2px !important; /* Add minimal padding for content */
             padding-bottom: 2px !important;
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
         }
 
         aside[aria-label="Info"] div[data-testid="property-value"] > div {
-            line-height: 1.4 !important; /* Increase line-height for better text visibility */
+            line-height: 1.2 !important; 
         }
 
         /* For content-rich property values that contain spans, use more generous spacing */
@@ -156,7 +157,7 @@
         }
 
         div[data-testid="property-value"] > div:has(span) {
-            line-height: 1.4 !important;
+            line-height: 1.2 !important;
         }
 
         /* Try multiple approaches to target the 34px height buttons - ONLY in sidebar */
@@ -210,7 +211,7 @@
             min-height: 14px !important;
             padding: 0px !important;
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
         }
 
         /* Target nested buttons within property values (like status buttons) - scoped - ONLY in sidebar */
@@ -219,35 +220,35 @@
             min-height: 14px !important;
             padding: 0px !important;
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
         }
 
         /* Target span elements inside property value buttons - scoped to cells - ONLY in sidebar */
         aside[aria-label="Info"] div[role="cell"] div[data-testid="property-value"] div[role="button"] span {
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
         }
 
         /* Target ONLY buttons within sidebar property cells - with specific inline styles */
         aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="height: 24px"] {
-            height: 14px !important;
+            height: auto !important;
             padding: 0px !important;
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height: 1.2 !important;
         }
 
         /* Target ONLY buttons within sidebar property cells - with padding-inline: 6px */
         aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="padding-inline: 6px"] {
             padding: 0px !important;
-            height: 14px !important;
+            height: auto !important;
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
         }
 
         /* Target ONLY buttons within sidebar property cells - with font-size: 14px */
         aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="font-size: 14px"] {
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
         }
 
         /* Ultra-specific: ONLY buttons within sidebar property-value containers */
@@ -257,7 +258,7 @@
             height: 14px !important;
             padding: 0px !important;
             font-size: 14px !important;
-            line-height: 1 !important;
+            line-height 1.2 !important;
             min-height: 14px !important;
         }
 
