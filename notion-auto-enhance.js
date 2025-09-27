@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Notion Tiny H1 + Auto Details
 // @namespace    http://tampermonkey.net/
-// @version      2.2.0
-// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls, Rolodex displays full content, move dialogs up
+// @version      2.2.1
+// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls, Rolodex displays full content, move dialogs up, style empty properties
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
@@ -364,7 +364,7 @@
             const text = btn.textContent?.trim();
             const ariaLabel = btn.getAttribute('aria-label');
 
-            if (text === 'View details' || ariaLabel === 'View/hide details') {
+            if (text === 'View details' || ariaLabel === 'View/hide details' || ariaLabel === 'Show/close details panel') {
                 console.log('[Notion] Found details button, clicking...');
                 btn.click();
                 console.log('[Notion] Opened details pane');
@@ -373,6 +373,41 @@
         }
 
         console.log('[Notion] Could not find View details button');
+    }
+
+    function styleEmptyProperties() {
+        const infoPanel = document.querySelector('aside[aria-label="Info"]');
+        if (!infoPanel) return;
+
+        const walker = document.createTreeWalker(infoPanel, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        const nodesToProcess = [];
+
+        while (node = walker.nextNode()) {
+            if (node.nodeValue.includes('Empty')) {
+                nodesToProcess.push(node);
+            }
+        }
+
+        nodesToProcess.forEach(node => {
+            const parent = node.parentNode;
+            if (!parent || parent.querySelector('.red-empty-styled')) return;
+
+            const fragment = document.createDocumentFragment();
+            const parts = node.nodeValue.split('Empty');
+
+            parts.forEach((part, index) => {
+                fragment.appendChild(document.createTextNode(part));
+                if (index < parts.length - 1) {
+                    const span = document.createElement('span');
+                    span.textContent = 'Empty';
+                    span.style.color = 'red';
+                    span.classList.add('red-empty-styled'); 
+                    fragment.appendChild(span);
+                }
+            });
+            parent.replaceChild(fragment, node);
+        });
     }
 
     function expandAllToggles() {
@@ -439,6 +474,7 @@
         openDetailsPane();
         setTimeout(expandAllToggles, 2000);
         setTimeout(fixButtonHeights, 2500);
+        setTimeout(styleEmptyProperties, 2500);
     }, 1500);
 
     let lastUrl = location.href;
@@ -450,6 +486,7 @@
                 openDetailsPane();
                 setTimeout(expandAllToggles, 2000);
                 setTimeout(fixButtonHeights, 2500);
+                setTimeout(styleEmptyProperties, 2500);
             }, 1500);
         }
     });
@@ -461,6 +498,7 @@
 
     // Run button height fix immediately
     setTimeout(fixButtonHeights, 1000);
+    setTimeout(styleEmptyProperties, 1000);
 
     console.log('[Notion] Script loaded - H1 reduced, controls hidden, details auto-open, toggles auto-expand, property panel optimized with section colors');
 
