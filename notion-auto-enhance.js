@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Camson Crown: Notion Optimizer
 // @namespace    http://tampermonkey.net/
-// @version      2.2.1
+// @version      2.2.2
 // @description  Camson Crown: Notion Optimizer. Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls, Rolodex displays full content, move dialogs up, style empty properties
 // @author       You
 // @match        https://www.notion.so/*
