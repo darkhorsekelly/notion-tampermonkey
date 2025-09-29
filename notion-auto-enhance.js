@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Notion Tiny H1 + Auto Details
+// @name         Camson Crown: Notion Optimizer
 // @namespace    http://tampermonkey.net/
 // @version      2.2.1
-// @description  Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls, Rolodex displays full content, move dialogs up, style empty properties
+// @description  Camson Crown: Notion Optimizer. Reduces H1 size, hides controls, opens details pane, adds section colors, decreases vertical height, swap page content order, hover controls, Rolodex displays full content, move dialogs up, style empty properties
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
@@ -253,6 +253,15 @@
         aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="font-size: 14px"] {
             font-size: 14px !important;
             line-height 1.2 !important;
+        }
+
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="font-size: 14px"] > span {
+            background-color: #B3DBFF !important;
+            padding-inline: 5px !important;
+        }
+
+        aside[aria-label="Info"] div[role="cell"] div[role="button"][style*="font-size: 14px"] > span:hover {
+            background-color: #80C3FF !important;
         }
 
         /* Ultra-specific: ONLY buttons within sidebar property-value containers */
