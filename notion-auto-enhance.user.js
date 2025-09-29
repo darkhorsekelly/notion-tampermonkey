@@ -6,8 +6,8 @@
 // @author       You
 // @match        https://www.notion.so/*
 // @match        https://*.notion.site/*
-// @updateURL    https://raw.githubusercontent.com/darkhorsekelly/notion-tampermonkey/main/notion-auto-enhance.js
-// @downloadURL  https://raw.githubusercontent.com/darkhorsekelly/notion-tampermonkey/main/notion-auto-enhance.js
+// @updateURL    https://raw.githubusercontent.com/darkhorsekelly/notion-tampermonkey/main/notion-auto-enhance.user.js
+// @downloadURL  https://raw.githubusercontent.com/darkhorsekelly/notion-tampermonkey/main/notion-auto-enhance.user.js
 // @grant        GM_addStyle
 // @run-at       document-idle
 // ==/UserScript==
